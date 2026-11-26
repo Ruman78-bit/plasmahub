@@ -4,6 +4,8 @@ Blood bank management web app built with the MERN stack. Patients request blood,
 
 Started as my internship project at Zenexis Solutions (2025).
 
+**Live demo:** https://plasmahub1.netlify.app/ (the API runs on a free plan, so the first request after a pause can take about a minute).
+
 ## Features
 
 **Patient**
