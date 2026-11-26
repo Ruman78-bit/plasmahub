@@ -1,0 +1,14 @@
+# Netlify builds the React client only. The Express API is hosted separately (see README, Deployment).
+[build]
+  base = "client"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Single-page app: send every path to index.html so React Router handles it.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
