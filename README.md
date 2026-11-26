@@ -127,6 +127,17 @@ Demo accounts created by the seed script (local use only):
 | Hospital | fortis@plasmahub.com | Hospital@123 |
 | Patient | patient@plasmahub.com | Patient@123 |
 
+## Deployment
+
+The client and the API are deployed separately.
+
+1. **Database:** create a free MongoDB Atlas cluster, add a database user, allow network access, and copy the connection string.
+2. **API (for example Render, Web Service):** root directory `server`, build command `npm install`, start command `npm start`. Set these environment variables: `MONGO_URI` (the Atlas string), `JWT_SECRET`, `ENCRYPTION_KEY` (generate both with the command in `server/.env.example`), `NODE_ENV=production` and `CLIENT_URL` (the Netlify site URL, with no trailing slash).
+3. **Client (Netlify):** import the repository. `netlify.toml` already sets the build to `client`, command `npm run build` and publish directory `dist`, and adds the redirect that React Router needs. Set the environment variable `VITE_API_BASE_URL` to the API URL (for example `https://plasmahub-api.onrender.com`) before building.
+4. Optional demo data: from `server`, run `node utils/seed.js` with `MONGO_URI` pointing at the Atlas database. It deletes all users, inventories and requests first, so use it only on a demo database. The demo accounts use the public passwords listed above, so change or remove them if the site holds real data.
+
+Free API plans can sleep when idle, so the first request after a pause may take about a minute.
+
 ## Engineering notes
 
 `DEBUG_REPORT.md` describes a loop of repeated API calls and re-renders. The cause was a `useToast` hook returning new function references on every render, which re-created the fetch callbacks and re-triggered their effects. The fix memoises the hook and the `AuthContext` value and makes effects depend on state instead of callback identity.
