@@ -133,7 +133,7 @@ Demo accounts created by the seed script (local use only):
 
 ## Known limitations
 
-- No automated tests yet. Endpoints were tested manually in Postman.
+- Test coverage is limited. Jest unit tests (`cd server && npm test`) cover the encryption utilities, the `protect` and `authorize` middleware and the error handler. Controllers, models and the React client have no automated tests, and endpoints were tested manually in Postman.
 - The token is kept in `localStorage`, and there are no refresh tokens.
 - Fulfilling a request reads stock and then writes it, so two simultaneous fulfilments could overdraw stock. It needs an atomic update or a transaction.
 - Encryption uses crypto-js in passphrase mode (AES-256-CBC with an older MD5-based key derivation and no authentication tag). Moving to Node's `crypto` with AES-256-GCM would be stronger. There is also no key rotation.
